@@ -1,9 +1,9 @@
 "use client";
 
-import { useEffect } from "react";
+import { Suspense, useEffect } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
 
-export default function GoogleCallback() {
+function GoogleCallbackInner() {
   const router = useRouter();
   const searchParams = useSearchParams();
 
@@ -56,5 +56,13 @@ export default function GoogleCallback() {
         <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-gray-900 mx-auto"></div>
       </div>
     </div>
+  );
+}
+
+export default function GoogleCallback() {
+  return (
+    <Suspense fallback={<div>Загрузка...</div>}>
+      <GoogleCallbackInner />
+    </Suspense>
   );
 }

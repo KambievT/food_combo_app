@@ -52,8 +52,8 @@ export default function Profile() {
           throw new Error("Не удалось получить профиль пользователя");
         const data = await res.json();
         setProfile({ name: data.user.name, email: data.user.email });
-      } catch (e: any) {
-        setError(e.message || "Ошибка получения профиля");
+      } catch (e) {
+        setError(e instanceof Error ? e.message : "Ошибка получения профиля");
       } finally {
         setLoading(false);
       }
@@ -67,7 +67,7 @@ export default function Profile() {
         method: "POST",
         credentials: "include",
       });
-    } catch (e) {}
+    } catch {}
     clearAccessToken();
     router.push("/auth/login");
   };

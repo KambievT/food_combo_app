@@ -66,7 +66,7 @@ export default function Menu() {
       {/* Menu Items */}
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
         {filteredItems.map((item) => (
-          <MenuCard item={item} />
+          <MenuCard item={item} key={item.id}/>
         ))}
       </div>
     </div>

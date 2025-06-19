@@ -118,9 +118,9 @@ export default function Home() {
               { icon: "👨‍🍳", text: "Профессиональные бариста" },
               { icon: "🪑", text: "Уютная атмосфера" },
               { icon: "📶", text: "Бесплатный Wi-Fi" },
-            ].map((item, index) => (
+            ].map((item) => (
               <motion.li
-                key={index}
+                key={item.text}
                 className="flex items-center space-x-3 text-lg"
                 variants={fadeInUp}
                 whileHover={{ x: 10 }}
@@ -178,7 +178,7 @@ export default function Home() {
               items: ["Паста", "Сэндвичи", "Салаты", "Супы"],
               icon: "🍝",
             },
-          ].map((category, index) => (
+          ].map((category) => (
             <motion.div
               key={category.title}
               className="bg-white p-8 rounded-2xl shadow-lg"
@@ -239,7 +239,7 @@ export default function Home() {
           >
             <div className="text-4xl mb-4">🍳</div>
             <h3 className="text-2xl font-semibold mb-3 text-black">
-              Комбо "Завтрак"
+              Комбо &quot; Завтрак &quot;
             </h3>
             <p className="mb-6 text-black text-lg">
               Капучино + круассан всего за 350₽

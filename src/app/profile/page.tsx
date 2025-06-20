@@ -1,9 +1,10 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { Skeleton } from "@/components/ui/skeleton";
 import { useUserStore } from "@/lib/userStore";
+import { useGetProfile } from "@/hooks/UseGetProfile";
 
 interface Order {
   id: number;
@@ -18,12 +19,7 @@ interface Order {
 }
 
 export default function Profile() {
-  const [profile, setProfile] = useState<{
-    name: string;
-    email: string;
-  } | null>(null);
-  const [error, setError] = useState<string>("");
-  const [loading, setLoading] = useState<boolean>(false);
+  const { profile, loading, error } = useGetProfile();
   const router = useRouter();
   const clearAccessToken = useUserStore((state) => state.clearAccessToken);
 
@@ -40,26 +36,6 @@ export default function Profile() {
     },
     // Add more orders as needed
   ]);
-
-  useEffect(() => {
-    const fetchProfile = async () => {
-      setLoading(true);
-      try {
-        const res = await fetch("http://localhost:3001/auth/profile", {
-          credentials: "include",
-        });
-        if (!res.ok)
-          throw new Error("Не удалось получить профиль пользователя");
-        const data = await res.json();
-        setProfile({ name: data.user.name, email: data.user.email });
-      } catch (e) {
-        setError(e instanceof Error ? e.message : "Ошибка получения профиля");
-      } finally {
-        setLoading(false);
-      }
-    };
-    fetchProfile();
-  }, []);
 
   const handleLogout = async () => {
     try {

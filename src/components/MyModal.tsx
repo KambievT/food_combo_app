@@ -2,7 +2,7 @@
 import { X } from "lucide-react";
 import React from "react";
 import Image from "next/image";
-import { motion } from "framer-motion";
+import { motion, AnimatePresence } from "framer-motion";
 
 interface props {
   isOpen: boolean;
@@ -11,17 +11,19 @@ interface props {
 
 export default function MyModal({ isOpen, handleClose }: props) {
   return (
-    <>
+    <AnimatePresence>
       {isOpen === true && (
         <motion.div
           initial={{ opacity: 0, y: -100 }}
           animate={{ opacity: 1, y: 0 }}
+          exit={{ opacity: 0, y: -100 }}
           transition={{ duration: 0.5 }}
           className="absolute w-full h-[100vh] bg-black/50 backdrop-blur-xl top-0 left-0 text-white"
         >
           <motion.div
             initial={{ scale: 0.9, opacity: 0 }}
             animate={{ scale: 1, opacity: 1 }}
+            exit={{ scale: 0.9, opacity: 0 }}
             transition={{ delay: 0.6, duration: 0.5 }}
             whileTap={{ scale: 0.95 }}
           >
@@ -34,6 +36,7 @@ export default function MyModal({ isOpen, handleClose }: props) {
           <motion.div
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
             transition={{ duration: 0.4 }}
             className="flex justify-center "
           >
@@ -50,6 +53,7 @@ export default function MyModal({ isOpen, handleClose }: props) {
               onClick={handleClose}
               initial={{ opacity: 0, y: -20 }}
               animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, y: -20 }}
               transition={{ delay: 0.5, duration: 0.3 }}
               href="/"
               className="text-2xl"
@@ -60,6 +64,7 @@ export default function MyModal({ isOpen, handleClose }: props) {
               onClick={handleClose}
               initial={{ opacity: 0, y: -20 }}
               animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, y: -20 }}
               transition={{ delay: 0.6, duration: 0.5 }}
               href="/menu"
               className="text-2xl"
@@ -70,6 +75,7 @@ export default function MyModal({ isOpen, handleClose }: props) {
               onClick={handleClose}
               initial={{ opacity: 0, y: -20 }}
               animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, y: -20 }}
               transition={{ delay: 0.7, duration: 0.6 }}
               href="/profile"
               className="text-2xl"
@@ -79,6 +85,6 @@ export default function MyModal({ isOpen, handleClose }: props) {
           </div>
         </motion.div>
       )}
-    </>
+    </AnimatePresence>
   );
 }

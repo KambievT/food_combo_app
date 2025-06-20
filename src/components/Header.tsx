@@ -2,8 +2,8 @@
 
 import Link from "next/link";
 import { ShoppingCart, Menu } from "lucide-react";
-import { Button } from "@nextui-org/react";
 import Image from "next/image";
+import { Button } from "@/components/ui/button";
 import { useState } from "react";
 import MyModal from "./MyModal";
 import { useUserStore } from "@/lib/userStore";
@@ -55,8 +55,6 @@ export default function Header() {
           <div className="flex items-center space-x-6">
             <Link href="/cart">
               <Button
-                isIconOnly
-                variant="light"
                 className="text-foreground/80 hover:text-primary"
                 aria-label="Cart"
               >
@@ -67,7 +65,6 @@ export default function Header() {
               <Link href="/auth/login">
                 <Button
                   color="default"
-                  variant="flat"
                   className="border-1 border-black/30 py-2 px-3 rounded-xl bg-black text-white hover:bg-white hover:scale-105 hover:text-black transition-all font-medium"
                 >
                   Войти
@@ -75,11 +72,9 @@ export default function Header() {
               </Link>
             )}
             <Button
-              isIconOnly
-              variant="light"
               className="md:hidden text-foreground/80 hover:text-primary"
               aria-label="Menu"
-              onPress={handleOpen}
+              onClick={handleOpen}
             >
               <Menu className="w-5 h-5" />
             </Button>

@@ -1,12 +1,22 @@
-import React from "react";
-import { motion } from "framer-motion";
+import React, { useEffect, useState } from "react";
+import { motion, AnimatePresence } from "framer-motion";
 import { fadeInUp, scaleIn, staggerContainer } from "@/constants";
+import Image from "next/image";
 
 export default function About() {
+  const [currentSlide, setCurrentSlide] = useState(0);
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setCurrentSlide((prev) => (prev + 1) % 2);
+    }, 5000);
+    return () => clearInterval(interval);
+  }, []);
+
   return (
     <>
       <motion.section
-        className="grid grid-cols-1 md:grid-cols-2 gap-12 items-center py-16"
+        className="grid grid-cols-1 md:grid-cols-2 gap-12 items-center py-16 min-h-[500px] md:min-h-[600px]"
         initial="initial"
         whileInView="animate"
         viewport={{ once: true, margin: "-100px" }}
@@ -40,14 +50,35 @@ export default function About() {
           </ul>
         </motion.div>
         <motion.div
-          className="relative h-[500px] rounded-2xl overflow-hidden"
+          className="relative min-h-[350px] h-full min-w-[320px] w-full md:w-[500px] rounded-2xl overflow-hidden justify-self-center self-stretch"
           variants={scaleIn}
           whileHover={{ scale: 1.02 }}
           transition={{ duration: 0.3 }}
         >
-          <div className="absolute inset-0 bg-gradient-to-br from-gray-200 to-gray-300">
-            {/* Add cafe image here */}
-          </div>
+          <AnimatePresence mode="wait">
+            {["/cafe-img2.webp", "/FON.webp"].map(
+              (src, idx) =>
+                currentSlide === idx && (
+                  <motion.div
+                    key={src + currentSlide}
+                    className="absolute inset-0 w-full h-full"
+                    initial={{ opacity: 0, x: 100 }}
+                    animate={{ opacity: 1, x: 0 }}
+                    exit={{ opacity: 0, x: -100 }}
+                    transition={{ duration: 0.6, ease: "easeInOut" }}
+                    style={{ pointerEvents: "auto" }}
+                  >
+                    <Image
+                      src={src}
+                      alt="Кафе"
+                      fill
+                      className="object-cover"
+                      priority={idx === 0}
+                    />
+                  </motion.div>
+                )
+            )}
+          </AnimatePresence>
         </motion.div>
       </motion.section>
     </>

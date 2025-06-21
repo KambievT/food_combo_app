@@ -55,7 +55,7 @@ export default function Header() {
           <div className="flex items-center space-x-6">
             <Link href="/cart">
               <Button
-                className="text-foreground/80 hover:text-primary"
+                className="text-foreground/80 bg-white border-1 border-black/30  hover:text-white hover:bg-black"
                 aria-label="Cart"
               >
                 <ShoppingCart className="w-5 h-5" />
@@ -72,7 +72,7 @@ export default function Header() {
               </Link>
             )}
             <Button
-              className="md:hidden text-foreground/80 hover:text-primary"
+              className="md:hidden text-foreground/80  bg-white border-1 border-black/30 hover:text-white hover:bg-black"
               aria-label="Menu"
               onClick={handleOpen}
             >

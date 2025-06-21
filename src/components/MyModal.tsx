@@ -18,7 +18,7 @@ export default function MyModal({ isOpen, handleClose }: props) {
           animate={{ opacity: 1, y: 0 }}
           exit={{ opacity: 0, y: -100 }}
           transition={{ duration: 0.5 }}
-          className="absolute w-full h-[100vh] bg-black/50 backdrop-blur-xl top-0 left-0 text-white"
+          className="absolute w-full h-[100vh] bg-white backdrop-blur-3xl top-0 left-0 text-black"
         >
           <motion.div
             initial={{ scale: 0.9, opacity: 0 }}

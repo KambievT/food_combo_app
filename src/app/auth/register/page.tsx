@@ -3,7 +3,6 @@
 import React from "react";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
-import { GrGoogle } from "react-icons/gr";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { motion } from "framer-motion";
@@ -69,10 +68,6 @@ const RegisterPage = () => {
     PostRegister(values);
   }
 
-  const handleGoogleRegister = () => {
-    window.location.href = "http://localhost:3001/auth/google";
-  };
-
   return (
     <div className="min-h-screen flex items-center justify-center p-4">
       <motion.div
@@ -93,22 +88,6 @@ const RegisterPage = () => {
             Войти в него
           </Link>
         </p>
-
-        <Button
-          variant="outline"
-          className="w-full flex items-center justify-center py-2 px-4 rounded-lg border border-gray-300 text-gray-700 mb-6 hover:bg-gray-50"
-          onClick={handleGoogleRegister}
-        >
-          <GrGoogle className="mr-2 h-5 w-5" /> Продолжить с Google
-        </Button>
-
-        {/* OR Separator */}
-        <div className="relative w-full flex justify-center items-center mb-6">
-          <div className="absolute w-full border-t border-gray-300"></div>
-          <span className="relative bg-white px-3 text-gray-500 text-sm">
-            Или
-          </span>
-        </div>
 
         <p className="text-gray-600 text-sm mb-4">
           Введите ваш адрес электронной почты для создания аккаунта.

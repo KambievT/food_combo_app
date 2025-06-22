@@ -2,6 +2,7 @@
 
 import { Suspense, useEffect } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
+import { API_BASE_URL } from "@/constants";
 
 function GoogleCallbackInner() {
   const router = useRouter();
@@ -24,7 +25,7 @@ function GoogleCallbackInner() {
 
         // Получаем данные пользователя
         try {
-          const response = await fetch("http://localhost:3001/auth/me", {
+          const response = await fetch(`${API_BASE_URL}/auth/me`, {
             headers: {
               Authorization: `Bearer ${token}`,
             },

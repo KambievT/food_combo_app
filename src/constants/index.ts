@@ -1,3 +1,5 @@
+export const API_BASE_URL = "https://food-combo-server.onrender.com";
+
 export const fadeInUp = {
   initial: { opacity: 0, y: 20 },
   animate: { opacity: 1, y: 0 },

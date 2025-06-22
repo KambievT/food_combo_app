@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import { API_BASE_URL } from "@/constants";
 
 export const useGetProfile = () => {
   const [profile, setProfile] = useState<{
@@ -12,7 +13,7 @@ export const useGetProfile = () => {
     const fetchProfile = async () => {
       setLoading(true);
       try {
-        const res = await fetch("http://localhost:3001/auth/profile", {
+        const res = await fetch(`${API_BASE_URL}/auth/profile`, {
           credentials: "include",
         });
         if (!res.ok)

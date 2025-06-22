@@ -9,6 +9,7 @@ import { motion } from "framer-motion";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useUserStore } from "@/lib/userStore";
+import { API_BASE_URL } from "@/constants";
 
 import * as z from "zod";
 import {
@@ -44,7 +45,7 @@ const RegisterPage = () => {
 
   const PostRegister = async (values: z.infer<typeof formSchema>) => {
     try {
-      const response = await fetch("http://localhost:3001/auth/register", {
+      const response = await fetch(`${API_BASE_URL}/auth/register`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

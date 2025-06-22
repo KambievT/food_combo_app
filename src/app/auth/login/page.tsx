@@ -10,6 +10,7 @@ import * as z from "zod";
 import { motion } from "framer-motion";
 import { useRouter } from "next/navigation";
 import { useUserStore } from "@/lib/userStore";
+import { API_BASE_URL } from "@/constants";
 
 import {
   Form,
@@ -45,7 +46,7 @@ const LoginPage = () => {
 
   const PostLogin = async (values: z.infer<typeof formSchema>) => {
     try {
-      const response = await fetch("http://localhost:3001/auth/login", {
+      const response = await fetch(`${API_BASE_URL}/auth/login`, {
         method: "POST",
         credentials: "include",
         headers: {

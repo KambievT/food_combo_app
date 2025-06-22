@@ -47,7 +47,7 @@ export default function Hero() {
         >
           <Link
             href="/menu"
-            className="bg-black text-white px-8 py-4 rounded-full hover:bg-gray-800 transition-colors text-lg font-medium shadow-lg hover:shadow-xl"
+            className="bg-black text-white px-8 py-4 rounded-full hover:bg-white hover:text-black transition-all text-lg font-medium shadow-lg hover:shadow-xl"
           >
             Смотреть меню
           </Link>

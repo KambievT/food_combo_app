@@ -104,7 +104,9 @@ export default function Footer() {
         </div>
 
         <div className="mt-12 pt-8 border-t text-center text-foreground/60">
-          <p>&copy; {new Date().getFullYear()} Cafe. Все права защищены.</p>
+          <p>
+            &copy; {new Date().getFullYear()} Фуд Комбо. Все права защищены.
+          </p>
         </div>
       </div>
     </footer>

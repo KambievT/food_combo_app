@@ -73,6 +73,16 @@ export default function Profile() {
     return statusMap[status];
   };
 
+  const filters: {
+    label: string;
+    value: "all" | "completed" | "processing" | "cancelled";
+  }[] = [
+    { label: "Все", value: "all" },
+    { label: "Выполнен", value: "completed" },
+    { label: "В обработке", value: "processing" },
+    { label: "Отменен", value: "cancelled" },
+  ];
+
   return (
     <motion.div
       className="max-w-3xl mx-auto space-y-12 px-2"
@@ -144,16 +154,11 @@ export default function Profile() {
         </h2>
         {/* Фильтр заказов */}
         <div className="flex gap-3 mb-6 flex-wrap">
-          {[
-            { label: "Все", value: "all" },
-            { label: "Выполнен", value: "completed" },
-            { label: "В обработке", value: "processing" },
-            { label: "Отменен", value: "cancelled" },
-          ].map((f) => (
+          {filters.map((f) => (
             <Button
               key={f.value}
               size="lg"
-              onClick={() => setOrderFilter(f.value as any)}
+              onClick={() => setOrderFilter(f.value)}
               className={
                 orderFilter === f.value
                   ? "bg-white text-black  border-1 border-black/30 hover:bg-white rounded-full"

@@ -5,6 +5,7 @@ import Hero from "@/sections/home/Hero";
 import About from "@/sections/home/About";
 import SpecialOffers from "@/sections/home/SpecialOffers";
 import MapBlock from "@/components/MapBlock";
+import ReadyForOrder from "@/sections/home/ReadyForOrder";
 
 export default function Home() {
   const targetRef = useRef(null);
@@ -15,6 +16,7 @@ export default function Home() {
       <About />
       <SpecialOffers />
       <MapBlock />
+      <ReadyForOrder />
     </div>
   );
 }

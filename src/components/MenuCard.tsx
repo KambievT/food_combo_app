@@ -1,10 +1,13 @@
 "use client";
 import React from "react";
 import { motion } from "framer-motion";
+import { useCartStore } from "@/lib/cartStore";
+import { Toaster } from "@/components/ui/sonner";
+import { toast } from "sonner";
 
 interface MenuItem {
   id: number;
-  name: string;
+  title: string;
   description: string;
   price: number;
   category: string;
@@ -15,8 +18,19 @@ interface props {
   item: MenuItem;
 }
 export default function MenuCard({ item }: props) {
+  const addToCart = useCartStore((state) => state.addToCart);
+  const handleAddToCart = () => {
+    addToCart({
+      id: item.id,
+      title: item.title,
+      price: item.price,
+      quantity: 1,
+    });
+    toast.success(`Добавлено в корзину: ${item.title}`);
+  };
   return (
     <>
+      <Toaster position="top-right" richColors />
       <motion.div
         initial={{ opacity: 0, scale: 0.8, rotateY: -15 }}
         animate={{ opacity: 1, scale: 1, rotateY: 0 }}
@@ -45,7 +59,7 @@ export default function MenuCard({ item }: props) {
             exit={{ opacity: 0, y: -20 }}
             transition={{ delay: 0.3 + item.id * 0.1 }}
           >
-            {item.name}
+            {item.title}
           </motion.h3>
           <motion.p
             className="text-gray-600 mt-1 mb-10"
@@ -56,30 +70,29 @@ export default function MenuCard({ item }: props) {
           >
             {item.description}
           </motion.p>
-          <div className="mt-4 flex justify-between items-center">
-            <motion.span
-              className="text-lg font-bold absolute left-5 bottom-3"
-              initial={{ opacity: 0, x: -20 }}
-              animate={{ opacity: 1, x: 0 }}
-              exit={{ opacity: 0, x: 20 }}
-              transition={{ delay: 0.5 + item.id * 0.1 }}
-            >
-              {item.price} ₽
-            </motion.span>
-            <motion.button
-              className="cursor-pointer bg-black text-white px-4 py-2 rounded-md hover:bg-white hover:text-black border-1 border-black/30 transition-all absolute bottom-2 right-2"
-              whileTap={{ scale: 0.9 }}
-              initial={{ opacity: 0, x: 20 }}
-              animate={{ opacity: 1, x: 0 }}
-              exit={{ opacity: 0, x: -20 }}
-              transition={{
-                delay: 0.6 + item.id * 0.1,
-                duration: 0.15,
-              }}
-            >
-              В корзину
-            </motion.button>
-          </div>
+          <motion.span
+            className="text-lg font-bold absolute left-5 bottom-3"
+            initial={{ opacity: 0, x: -20 }}
+            animate={{ opacity: 1, x: 0 }}
+            exit={{ opacity: 0, x: 20 }}
+            transition={{ delay: 0.5 + item.id * 0.1 }}
+          >
+            {item.price} ₽
+          </motion.span>
+          <motion.button
+            className="cursor-pointer bg-black text-white px-4 py-2 rounded-md hover:bg-white hover:text-black border-1 border-black/30 transition-all absolute bottom-2 right-2"
+            whileTap={{ scale: 0.9 }}
+            initial={{ opacity: 0, x: 20 }}
+            animate={{ opacity: 1, x: 0 }}
+            exit={{ opacity: 0, x: -20 }}
+            transition={{
+              delay: 0.6 + item.id * 0.1,
+              duration: 0.15,
+            }}
+            onClick={handleAddToCart}
+          >
+            В корзину
+          </motion.button>
         </div>
       </motion.div>
     </>

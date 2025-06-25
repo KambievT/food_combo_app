@@ -1,80 +1,46 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import MenuCard from "./../../components/MenuCard";
+import { API_BASE_URL } from "@/constants";
 
 interface MenuItem {
   id: number;
-  name: string;
+  title: string;
   description: string;
   price: number;
   category: string;
   image: string;
 }
 
-const menuItems: MenuItem[] = [
-  {
-    id: 1,
-    name: "Капучино",
-    description: "Классический итальянский кофе с молоком",
-    price: 180,
-    category: "Горячие напитки",
-    image: "/coffee.jpg",
-  },
-  {
-    id: 2,
-    name: "Тирамису",
-    description: "Итальянский десерт с кофе и маскарпоне",
-    price: 250,
-    category: "Десерты",
-    image: "/tiramisu.jpg",
-  },
-  {
-    id: 3,
-    name: "Латте",
-    description: "Нежный кофе с молоком и пенкой",
-    price: 160,
-    category: "Горячие напитки",
-    image: "/latte.jpg",
-  },
-  {
-    id: 4,
-    name: "Паста Карбонара",
-    description: "Классическая итальянская паста с беконом и яйцом",
-    price: 320,
-    category: "Основные блюда",
-    image: "/pasta.jpg",
-  },
-  {
-    id: 5,
-    name: "Чизкейк",
-    description: "Нежный десерт с творожным кремом",
-    price: 280,
-    category: "Десерты",
-    image: "/cheesecake.jpg",
-  },
-  {
-    id: 6,
-    name: "Эспрессо",
-    description: "Крепкий итальянский кофе",
-    price: 120,
-    category: "Горячие напитки",
-    image: "/espresso.jpg",
-  },
-];
-
 const categories = ["Все", "Горячие напитки", "Десерты", "Основные блюда"];
 
 export default function Menu() {
   const [selectedCategory, setSelectedCategory] = useState("Все");
   const [searchQuery, setSearchQuery] = useState("");
+  const [menuItems, setMenuItems] = useState<MenuItem[]>([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
+
+  useEffect(() => {
+    setLoading(true);
+    setError(null);
+    fetch(`${API_BASE_URL}/cards/menu`) // Замените на ваш реальный эндпоинт
+      .then((res) => {
+        if (!res.ok) throw new Error("Ошибка загрузки меню");
+        return res.json();
+      })
+      .then((data) => setMenuItems(data))
+      .catch((err) => setError(err.message))
+      .finally(() => setLoading(false));
+  }, []);
 
   const filteredItems = menuItems.filter((item) => {
     const matchesCategory =
       selectedCategory === "Все" || item.category === selectedCategory;
     const matchesSearch =
-      item.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
+      item.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
       item.description.toLowerCase().includes(searchQuery.toLowerCase());
     return matchesCategory && matchesSearch;
   });
@@ -124,8 +90,12 @@ export default function Menu() {
         ))}
       </div>
 
+      {/* Loading/Error */}
+      {loading && <div className="text-center py-8">Загрузка...</div>}
+      {error && <div className="text-center text-red-500 py-8">{error}</div>}
+
       {/* Results count */}
-      {searchQuery && (
+      {searchQuery && !loading && !error && (
         <p className="text-gray-600">
           Найдено {filteredItems.length}{" "}
           {filteredItems.length === 1
@@ -139,14 +109,14 @@ export default function Menu() {
       {/* Menu Items */}
       <AnimatePresence mode="wait">
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-          {filteredItems.map((item) => (
-            <MenuCard item={item} key={item.id} />
-          ))}
+          {!loading &&
+            !error &&
+            filteredItems.map((item) => <MenuCard item={item} key={item.id} />)}
         </div>
       </AnimatePresence>
 
       {/* No results message */}
-      {filteredItems.length === 0 && (
+      {!loading && !error && filteredItems.length === 0 && (
         <motion.div
           className="text-center py-12"
           initial={{ opacity: 0, y: 20 }}
